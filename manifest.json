@@ -1,0 +1,9 @@
+{
+  "name": "急救 AI 助手 v2",
+  "short_name": "急救AI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff5f5",
+  "theme_color": "#d64040",
+  "icons": []
+}

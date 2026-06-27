@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>急救 AI 助手 v2</title>
+  <meta name="theme-color" content="#d64040" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="title-row">
+        <div>
+          <h1>🩹 急救 AI 助手 v2</h1>
+          <p>拍照、語音、搜尋、AI 分析。結果會顯示在上方，不用往下滑找答案。</p>
+        </div>
+        <button id="darkBtn" class="icon-btn">🌙</button>
+      </div>
+      <div class="emergency">🚨 大量出血、呼吸困難、昏迷、胸痛、嚴重過敏、疑似中風、觸電後不舒服，請立刻打 119。</div>
+      <div class="nav-grid">
+        <button data-panel="camera">📷<span>拍照分析</span></button>
+        <button data-panel="search">🔍<span>症狀搜尋</span></button>
+        <button data-panel="voice">🎤<span>語音詢問</span></button>
+        <button id="call119">🚑<span>撥打 119</span></button>
+      </div>
+    </section>
+
+    <section id="topResult" class="top-result">
+      <div class="top-result-head">
+        <strong>結果顯示區</strong>
+        <button id="clearResult" class="small ghost">清除</button>
+      </div>
+      <div id="topResultBody">請先搜尋、語音輸入或拍照分析。</div>
+    </section>
+
+    <section id="panel-camera" class="card panel active">
+      <h2>📷 拍照 / AI 傷口分析</h2>
+      <p class="muted">GitHub Pages 的 HTTPS 環境可使用相機。若相機不開，請確認瀏覽器相機權限。</p>
+      <div class="actions">
+        <button id="startCamera">啟動相機</button>
+        <button id="capturePhoto">拍下畫面</button>
+        <button id="pickPhoto" class="ghost">選照片</button>
+      </div>
+      <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="canvas"></canvas>
+      <img id="preview" alt="照片預覽" />
+      <div id="cameraStatus" class="notice">尚未拍照。</div>
+
+      <div class="api-box">
+        <h3>🤖 OpenAI Vision 設定</h3>
+        <p class="muted">API Key 只存在你的瀏覽器 localStorage。不要把 Key 寫進 GitHub。</p>
+        <input id="apiKey" type="password" placeholder="貼上 OpenAI API Key" />
+        <select id="model">
+          <option value="gpt-4o-mini">gpt-4o-mini</option>
+          <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+          <option value="gpt-4.1">gpt-4.1</option>
+        </select>
+        <div class="actions">
+          <button id="saveKey" class="safe">儲存 Key</button>
+          <button id="clearKey" class="ghost">清除 Key</button>
+          <button id="analyzePhoto">AI 分析照片</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-search" class="card panel">
+      <h2>🔍 症狀搜尋</h2>
+      <div class="search-row">
+        <input id="searchInput" placeholder="例如：肚子痛、燙傷、骨折、眼睛卡異物" />
+        <button id="searchBtn">搜尋</button>
+      </div>
+      <div id="chips" class="chips"></div>
+    </section>
+
+    <section id="panel-voice" class="card panel">
+      <h2>🎤 語音詢問</h2>
+      <p class="muted">按下開始後說出狀況，例如：「小孩一直吐怎麼辦」。</p>
+      <div class="actions">
+        <button id="startVoice">開始語音</button>
+      </div>
+      <div id="voiceStatus" class="notice">尚未開始語音。</div>
+    </section>
+
+    <section class="card">
+      <h2>📍 地圖與急救專區</h2>
+      <div class="mini-grid">
+        <button id="nearHospital" class="ghost">附近醫院</button>
+        <button id="nearClinic" class="ghost">附近診所</button>
+        <button id="appleMaps" class="ghost">Apple Maps</button>
+        <button data-search="CPR">CPR</button>
+        <button data-search="AED">AED</button>
+        <button data-search="幼兒急救">幼兒急救</button>
+        <button data-search="長者急救">長者急救</button>
+        <button data-search="常見藥物">常見藥物</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
