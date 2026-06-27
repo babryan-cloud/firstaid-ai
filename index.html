@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>急救 AI 助手 v2</title>
+  <title>急救 AI 助手 v2.1</title>
   <meta name="theme-color" content="#d64040" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="css/style.css" />
@@ -13,8 +13,8 @@
     <section class="hero">
       <div class="title-row">
         <div>
-          <h1>🩹 急救 AI 助手 v2</h1>
-          <p>拍照、語音、搜尋、AI 分析。結果會顯示在上方，不用往下滑找答案。</p>
+          <h1>🩹 急救 AI 助手 v2.1</h1>
+          <p>拍照、語音、搜尋、AI 分析。v2.1 強化 iPhone Edge 拍照相容性。</p>
         </div>
         <button id="darkBtn" class="icon-btn">🌙</button>
       </div>
@@ -38,16 +38,22 @@
     <section id="panel-camera" class="card panel active">
       <h2>📷 拍照 / AI 傷口分析</h2>
       <p class="muted">GitHub Pages 的 HTTPS 環境可使用相機。若相機不開，請確認瀏覽器相機權限。</p>
-      <div class="actions">
-        <button id="startCamera">啟動相機</button>
-        <button id="capturePhoto">拍下畫面</button>
-        <button id="pickPhoto" class="ghost">選照片</button>
+      <div class="native-camera-box">
+        <h3>✅ 手機最穩拍照入口</h3>
+        <p class="muted">請直接點下面這一格。iPhone Edge/Safari 通常會跳出「拍照 / 照片圖庫」。這比隱藏按鈕更穩。</p>
+        <input id="photoInput" class="native-photo-input" type="file" accept="image/*" capture="environment" />
       </div>
-      <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
+
+      <div class="actions">
+        <button id="startCamera">進階：啟動即時相機</button>
+        <button id="capturePhoto">拍下即時畫面</button>
+        <button id="runCameraTest" class="ghost">相機檢測</button>
+      </div>
+
       <video id="video" autoplay playsinline muted></video>
       <canvas id="canvas"></canvas>
       <img id="preview" alt="照片預覽" />
-      <div id="cameraStatus" class="notice">尚未拍照。</div>
+      <div id="cameraStatus" class="notice">尚未拍照。建議先用上方「手機最穩拍照入口」。</div>
 
       <div class="api-box">
         <h3>🤖 OpenAI Vision 設定</h3>
