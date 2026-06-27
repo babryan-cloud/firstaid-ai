@@ -1,4 +1,4 @@
-# 急救 AI 助手 v2.1
+# 急救 AI 助手 v2.3
 
 這是可直接放到 GitHub Pages 的 v2 專業版。
 
@@ -37,3 +37,20 @@
 - 保留進階即時相機 getUserMedia。
 - 加入相機檢測按鈕。
 - 結果仍固定顯示在上方。
+
+## v2.2 更新
+
+- 移除 Service Worker 離線快取。
+- 自動清除舊版 Service Worker 與 Cache Storage。
+- 避免手機瀏覽器一直讀到舊版拍照程式。
+- 上傳後請用 `?v=22` 強制刷新，例如：
+  `https://babryan-cloud.github.io/firstaid-ai/?v=22`
+
+## v2.3 更新
+
+- 加入情境式搜尋引擎。
+- 支援「路邊車禍跌倒怎麼辦」這種複合情境。
+- 新增交通事故、跌倒、噎到等高風險流程。
+- 搜尋結果仍固定顯示在上方。
+- 上傳後建議用 `?v=23` 強制刷新：
+  `https://babryan-cloud.github.io/firstaid-ai/?v=23`

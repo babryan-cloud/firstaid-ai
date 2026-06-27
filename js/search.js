@@ -20,15 +20,71 @@ export const topics = [
  {keys:["常見藥物","藥物","用藥","退燒藥","止痛藥"],title:"常見藥物與用法",icon:"💊",steps:["退燒止痛藥請依藥袋、年齡、體重與醫囑。","外用藥膏只薄擦。","抗生素不可自行亂吃或提早停藥。","不確定藥名、劑量、過敏史時，不要冒險使用。"],danger:"兒童、孕婦、肝腎病、藥物過敏者，用藥前請問醫師或藥師。"}
 ];
 
+const scenarios = [
+ {
+  keys:["車禍","撞車","機車摔","汽車撞","被撞","路邊","馬路","交通事故","摔車","騎車跌倒"],
+  title:"路邊車禍 / 交通事故跌倒",
+  icon:"🚗",
+  urgency:"🔴 高風險：先保護現場安全，再判斷是否需要 119。",
+  steps:[
+    "先確認自己安全：不要站在車道中間，打開警示燈或請旁人協助警示來車。",
+    "不要急著搬動傷者，尤其是頭、頸、背疼痛，或懷疑骨折、意識不清時。",
+    "大聲呼叫傷者，確認是否清醒、能不能正常說話與呼吸。",
+    "若昏迷、呼吸異常、大量出血、胸痛、嚴重頭痛、手腳無力，立刻打 119。",
+    "若有明顯出血，用乾淨布或紗布直接加壓止血。",
+    "若懷疑骨折或脊椎受傷，讓傷者保持原姿勢，等待救護人員。",
+    "可請旁人協助蒐集資訊：事故地點、受傷人數、是否有危險車流、是否需要警察。"
+  ],
+  danger:"立即 119：昏迷、呼吸困難、大量出血、頭頸背痛、肢體變形、骨頭外露、胸痛、抽搐、孕婦、兒童或長者受傷。"
+ },
+ {
+  keys:["跌倒","摔倒","跌下來","滑倒","摔傷","撞到頭","頭撞到"],
+  title:"跌倒 / 摔傷",
+  icon:"🤕",
+  urgency:"🟡 中高風險：先不要急著扶起，先判斷頭部、骨折與意識。",
+  steps:[
+    "先問：有沒有撞到頭？有沒有暈、想吐、意識怪怪的？",
+    "確認能否正常呼吸、說話、移動手腳。",
+    "若疼痛劇烈、肢體變形、不能站、麻木，不要硬扶起。",
+    "有流血先加壓止血；腫痛可冰敷 15～20 分鐘。",
+    "若只是輕微擦傷，清水沖洗、消毒、覆蓋傷口。",
+    "長者、使用抗凝血藥、頭部撞擊後，即使外觀看起來還好，也建議就醫評估。"
+  ],
+  danger:"立即就醫/119：昏迷、反覆嘔吐、劇烈頭痛、講話不清、單側無力、抽搐、肢體變形、不能走路、頭頸背痛。"
+ },
+ {
+  keys:["噎到","異物哽塞","卡住喉嚨","不能說話","吃東西噎到"],
+  title:"噎到 / 呼吸道異物",
+  icon:"😮‍💨",
+  urgency:"🔴 高風險：不能咳、不能說話、臉色發紫，要立刻處理並打 119。",
+  steps:[
+    "如果還能咳嗽或說話，鼓勵用力咳，不要亂拍背。",
+    "如果不能說話、不能咳、呼吸困難，請旁人打 119。",
+    "成人或較大兒童可做腹部推擠法；嬰兒處理方式不同，不可亂壓腹部。",
+    "若失去意識，立刻開始 CPR，並使用 AED。"
+  ],
+  danger:"立即 119：不能呼吸、不能說話、嘴唇發紫、失去意識。"
+ }
+];
+
+function normalize(q){ return (q || "").replace(/\s+/g,"").trim(); }
+
 export function findTopic(query){
-  const q = (query || "").trim();
+  const q = normalize(query);
   if(!q) return null;
+
+  const scenario = scenarios.find(s => s.keys.some(k => q.includes(k)));
+  if(scenario) return {...scenario, type:"scenario"};
+
   return topics.find(t => t.keys.some(k => q.includes(k))) || null;
 }
 
 export function renderTopic(topic){
   if(!topic){
-    return `<div class="result-card"><h3>查不到對應資料</h3><p>可試：擦傷、流血、燙傷、骨折、過敏、頭暈、吐、肚子痛、鼻子卡異物、眼睛卡異物、夾到手、被電到、呼吸困難、CPR、AED。</p><div class="danger">嚴重狀況請直接打 119。</div></div>`;
+    return `<div class="result-card"><h3>查不到對應資料</h3><p>可試完整情境，例如：「路邊車禍跌倒怎麼辦」、「小孩撞到頭一直吐」、「老人跌倒不能走」、「眼睛進沙子」。</p><div class="danger">嚴重狀況請直接打 119。</div></div>`;
+  }
+  if(topic.type === "scenario"){
+    return `<div class="result-card"><h3>${topic.icon} ${topic.title}</h3><div class="danger">${topic.urgency}</div><ol>${topic.steps.map(s=>`<li>${s}</li>`).join("")}</ol><div class="danger">${topic.danger}</div></div>`;
   }
   return `<div class="result-card"><h3>${topic.icon} ${topic.title}</h3><ol>${topic.steps.map(s=>`<li>${s}</li>`).join("")}</ol><div class="danger">${topic.danger}</div></div>`;
 }

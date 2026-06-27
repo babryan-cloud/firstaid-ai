@@ -52,6 +52,14 @@ initAI({setTopResult});
 initVoice({runSearch,setTopResult});
 initMaps();
 
-if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+// v2.2: remove old service worker cache. The old cache may keep serving outdated camera code.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations()
+    .then(regs => regs.forEach(reg => reg.unregister()))
+    .catch(() => {});
+}
+if ("caches" in window) {
+  caches.keys()
+    .then(keys => keys.forEach(key => caches.delete(key)))
+    .catch(() => {});
 }
